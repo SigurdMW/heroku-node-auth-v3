@@ -29,6 +29,7 @@ const { refreshTokenMiddleware } = setupWebAppAuth({
 		clientSecret: CLIENT_SECRET,
 		replyUrl: REPLY_URL
 	},
+	logLevel: "info",
 	onLoginComplete: (req, res) => {
 		res.redirect("/user")
 	},
@@ -52,7 +53,8 @@ const htmlTemplate = (content) => (
 		<body>
 			<a href="/login">Login</a><br>
 			<a href="/user">User info</a><br>
-			<a href="/refresh">Refresh token</a>
+			<a href="/refresh">Refresh token</a><br>
+			<a href="/logout">Logout</a>
 			<hr />
 			${content}
 		</body>
@@ -78,7 +80,7 @@ app.get("/user", isAuthenticated, (req, res) => {
 
 // Create an endpoint where we can refresh the services token.
 // By default this will refresh it when it has less than 5 minutes until it expires.
-app.get("/refresh", isAuthenticated, refreshTokenMiddleware(VERACITY_API_SCOPES.services), (req, res) => {
+app.get("/refresh", isAuthenticated, refreshTokenMiddleware(), (req, res) => {
 	res.send(htmlTemplate(JSON.stringify({
 		updated: Date.now(),
 		user: req.user
