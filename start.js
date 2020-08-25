@@ -93,20 +93,20 @@ app.use(function (err, req, res, next) {
 })
 
 
-if (isProduction) {
-	app.listen(PORT, () => {
+// if (isProduction) {
+	app.listen(PORT || 3000, () => {
 		console.log(`Example app listening on port ${PORT}`)
 	})
-} else {
-	// Set up the HTTPS development server
-	const server = https.createServer({
-		...generateCertificate() // Generate self-signed certificates for development
-	}, app)
-	server.on("error", (error) => { // If an error occurs halt the application
-		console.error(error)
-		process.exit(1)
-	})
-	server.listen(3000, () => { // Begin listening for connections
-		console.log("Listening for connections on port 3000")
-	})
-}
+// } else {
+// 	// Set up the HTTPS development server
+// 	const server = https.createServer({
+// 		...generateCertificate() // Generate self-signed certificates for development
+// 	}, app)
+// 	server.on("error", (error) => { // If an error occurs halt the application
+// 		console.error(error)
+// 		process.exit(1)
+// 	})
+// 	server.listen(3000, () => { // Begin listening for connections
+// 		console.log("Listening for connections on port 3000")
+// 	})
+// }
